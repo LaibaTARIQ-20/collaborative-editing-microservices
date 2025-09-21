@@ -1,5 +1,5 @@
 package com.document.editing.controller;
-
+import org.springframework.web.bind.annotation.CrossOrigin;
 import com.document.editing.dto.requestdto.DocumentRequestDTO;
 import com.document.editing.dto.requestdto.FileRequestDTO;
 import com.document.editing.dto.requestdto.RevertVersionRequestDTO;
@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+@CrossOrigin(origins = "*")
 @RestController
 @RequestMapping(value = "/document")
 public class DocumentController {
@@ -32,6 +33,7 @@ public class DocumentController {
     public void openFile(@RequestBody FileRequestDTO fileRequestDTO) {
         fileReadingService.startWatching(fileRequestDTO);
     }
+
 
     @PostMapping(value = "/revert-version")
     public ResponseEntity<String> revertVersion(@RequestBody RevertVersionRequestDTO revertVersionRequestDTO) {

@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Collaborative Editing System</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+            background: #f5f5f5;
+        }
+        .header {
+            text-align: center;
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            margin-bottom: 30px;
+        }
+        .services {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+        }
+        .service-card {
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+        .service-title {
+            color: #1976d2;
+            border-bottom: 2px solid #1976d2;
+            padding-bottom: 10px;
+        }
+        .endpoint {
+            background: #f8f9fa;
+            padding: 10px;
+            margin: 10px 0;
+            border-radius: 5px;
+            font-family: monospace;
+        }
+        .test-btn {
+            background: #4caf50;
+            color: white;
+            padding: 8px 15px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            margin: 5px;
+        }
+        .direct-link {
+            display: inline-block;
+            background: #2196f3;
+            color: white;
+            padding: 5px 10px;
+            text-decoration: none;
+            border-radius: 3px;
+            font-size: 12px;
+            margin: 5px;
+        }
+        .architecture {
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            margin: 20px 0;
+        }
+        .status {
+            color: #4caf50;
+            font-weight: bold;
+        }
+        #results {
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            margin-top: 20px;
+        }
+        pre {
+            background: #f5f5f5;
+            padding: 15px;
+            border-radius: 5px;
+            overflow-x: auto;
+        }
+    </style>
+</head>
+<body>
+
+<div class="header">
+    <h1>Collaborative Editing System</h1>
+    <p><strong>Spring Boot Microservices Architecture</strong></p>
+    <p>Similar to Google Docs - Multiple users can edit documents collaboratively with real-time tracking</p>
+</div>
+
+<div class="architecture">
+    <h2>System Architecture</h2>
+    <p><span class="status">✅ API Gateway</span> (Port 8084) - Routes requests to appropriate services</p>
+    <p><span class="status">✅ Service Discovery</span> (Port 8761) - <a href="http://localhost:8761" target="_blank">Eureka Dashboard</a></p>
+    <p><span class="status">✅ Database Integration</span> - MySQL with JPA/Hibernate</p>
+    <p><span class="status">✅ JUnit Tests</span> - Automated testing with Mockito</p>
+</div>
+
+<div class="services">
+
+    <div class="service-card">
+        <h3 class="service-title">User Management Service</h3>
+        <p><strong>Port:</strong> 9091</p>
+        <p><strong>Features:</strong> User registration, authentication, profile management</p>
+
+        <div class="endpoint">GET /api/user/list</div>
+        <button class="test-btn" onclick="testAPI('http://localhost:9091/api/user/list')">Test</button>
+        <a href="http://localhost:9091/api/user/list" target="_blank" class="direct-link">Open Direct</a>
+
+        <div class="endpoint">GET /api/user/profile/1</div>
+        <a href="http://localhost:9091/api/user/profile/1" target="_blank" class="direct-link">Open Direct</a>
+    </div>
+
+    <div class="service-card">
+        <h3 class="service-title">Document Editing Service</h3>
+        <p><strong>Port:</strong> 9191</p>
+        <p><strong>Features:</strong> Create documents, collaborative editing, real-time tracking</p>
+
+        <div class="endpoint">GET /document/documents</div>
+        <button class="test-btn" onclick="testAPI('http://localhost:9191/document/documents')">Test</button>
+        <a href="http://localhost:9191/document/documents" target="_blank" class="direct-link">Open Direct</a>
+
+        <div class="endpoint">POST /document/create</div>
+        <div class="endpoint">POST /document/open-file</div>
+    </div>
+
+    <div class="service-card">
+        <h3 class="service-title">Version Control Service</h3>
+        <p><strong>Port:</strong> 8082</p>
+        <p><strong>Features:</strong> Version history, revert changes, track contributions</p>
+
+        <div class="endpoint">GET /version/user/1/contributions</div>
+        <button class="test-btn" onclick="testAPI('http://localhost:8082/version/user/1/contributions')">Test</button>
+        <a href="http://localhost:8082/version/user/1/contributions" target="_blank" class="direct-link">Open Direct</a>
+
+        <div class="endpoint">GET /version/document/1/history</div>
+        <a href="http://localhost:8082/version/document/1/history" target="_blank" class="direct-link">Open Direct</a>
+    </div>
+
+</div>
+
+<div id="results">
+    <h3>API Response:</h3>
+    <pre id="response">Click any "Test" button above to see live API responses...</pre>
+</div>
+
+<script>
+    async function testAPI(url) {
+        document.getElementById('response').textContent = 'Loading...';
+        try {
+            const response = await fetch(url);
+            const text = await response.text();
+            let data;
+            try {
+                data = JSON.parse(text);
+                document.getElementById('response').textContent = JSON.stringify(data, null, 2);
+            } catch {
+                document.getElementById('response').textContent = text;
+            }
+        } catch (error) {
+            document.getElementById('response').textContent = 'Error: ' + error.message;
+        }
+    }
+</script>
+
+</body>
+</html>

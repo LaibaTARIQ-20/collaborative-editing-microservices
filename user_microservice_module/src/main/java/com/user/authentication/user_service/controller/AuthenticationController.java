@@ -1,4 +1,3 @@
-// AuthenticationController.java
 package com.user.authentication.user_service.controller;
 
 import com.user.authentication.user_service.dto.request.AuthenticationRequestDTO;
@@ -26,7 +25,7 @@ public class AuthenticationController extends BaseResponse {
 
     @PostMapping(value = "/login")
     public ResponseEntity<BaseResponseDTO> login(@RequestBody AuthenticationRequestDTO model) throws GlobleException {
-        log.info("Authentication request for user: {}", model.getUsername());
+        log.info("Authentication request received");
         return ResponseEntity.ok(response(HttpStatus.OK, "Authentication successful",
                 authenticationService.authenticate(model)));
     }
@@ -39,8 +38,7 @@ public class AuthenticationController extends BaseResponse {
 
     @PostMapping(value = "/logout")
     public ResponseEntity<BaseResponseDTO> logout(@RequestParam("token") String token) {
-        log.info("Logout request for token: {}", token.substring(0, Math.min(token.length(), 10)) + "...");
-        // Add logout logic here if needed
+        log.info("Logout request received");
         return ResponseEntity.ok(response(HttpStatus.OK, "Successfully logged out"));
     }
 }
